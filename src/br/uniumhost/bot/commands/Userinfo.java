@@ -1,31 +1,27 @@
 package br.uniumhost.bot.commands;
 
 import br.uniumhost.bot.Config;
-import com.jagrosh.jdautilities.command.Command;
-import com.jagrosh.jdautilities.command.CommandEvent;
 import net.dv8tion.jda.api.EmbedBuilder;
+import net.dv8tion.jda.api.JDA;
 import net.dv8tion.jda.api.entities.Activity;
 import net.dv8tion.jda.api.entities.Member;
+import net.dv8tion.jda.api.entities.Message;
 
 import java.awt.*;
 
-public class Userinfo extends Command {
+public class Userinfo {
 
-    public Userinfo() { this.guildOnly = false; this.name = "userinfo"; }
+    public void Command(Message Msg, Member User, String[] args, JDA jda) {
+        Msg.delete().queue();
 
-    @Override
-    protected void execute(CommandEvent ev) {
-        String[] args = ev.getArgs().split(" ");
-        ev.getMessage().delete().queue();
-
-        boolean case0 = args[0] == "";
-        boolean case1 = ev.getMessage().getMentionedMembers().size() >= 1;
-        boolean case2 = args[0].length() == 18;
+        boolean case0 = args[1] == "";
+        boolean case1 = Msg.getMentionedMembers().size() >= 1;
+        boolean case2 = args[1].length() == 18;
 
         if (case0) {
-            String Memberid = ev.getAuthor().getId();
+            String Memberid = Msg.getAuthor().getId();
 
-            Member Member = ev.getGuild().getMemberById(Memberid);
+            Member Member = Msg.getGuild().getMemberById(Memberid);
 
             String Useravatar = Member.getUser().getAvatarUrl();
             String Usernick = Member.getEffectiveName().replace(Member.getUser().getName(), "Usuário não possui apelido");
@@ -52,12 +48,12 @@ public class Userinfo extends Command {
                     .setTitle("Informações | " + Usernick)
                     .setDescription("**Tag**: " + Namewithhash + "\n **Apelido neste servidor**: " + Usernick + "\n **ID**: " + Memberid + "\n **Entrou aqui em**: " + entrDia + "/" + entrMes + "/" + entrAno + "\n **Status**: " + act0 + " " + act1.getName() + "\n **É BOT**? " + ebot);
 
-            ev.reply(userinfo.build());
+            Msg.getTextChannel().sendMessage(userinfo.build()).queue();
 
         }
         if (case1){
             try {
-                Member Member = ev.getMessage().getMentionedMembers().get(0);
+                Member Member = Msg.getMentionedMembers().get(0);
 
                 String Useravatar = Member.getUser().getAvatarUrl();
                 String Usernick = Member.getEffectiveName().replace(Member.getUser().getName(), "Usuário não possui apelido");
@@ -81,11 +77,11 @@ public class Userinfo extends Command {
                         .setTitle("Informações | " + Usernick)
                         .setDescription("**Tag**: " + Namewithhash + "\n **Apelido neste servidor**: " + Usernick + "\n **ID**: " + Id + "\n **Entrou aqui em**: " + Joinday + "/" + Joinmonth + "/" + Joinyear + "\n **É BOT**? " + Isbot);
 
-                ev.reply(userinfo.build());
+                Msg.getTextChannel().sendMessage(userinfo.build()).queue();
 
             } catch (NullPointerException exc) {
 
-                ev.reply("Usuário inválido.");
+                Msg.getTextChannel().sendMessage("Usuário inválido.").queue();
 
             }
 
@@ -96,7 +92,7 @@ public class Userinfo extends Command {
             try {
                 String Memberid = args[0];
 
-                Member Member = ev.getGuild().getMemberById(Memberid);
+                Member Member = Msg.getGuild().getMemberById(Memberid);
 
                 Activity Memberactivity = Member.getActivities().get(0);
 
@@ -123,11 +119,11 @@ public class Userinfo extends Command {
                         .setTitle("Informações | " + Usernick)
                         .setDescription("**Tag**: " + Namewithhash + "\n **Apelido neste servidor**: " + Usernick + "\n **ID**: " + Userid + "\n **Entrou aqui em**: " + Joinday + "/" + Joinmonth + "/" + Joinyear + "\n **Status**: " + Memberactivity1 + " " + Memberactivity.getName() + "\n **É BOT**? " + Isbot);
 
-                ev.reply(userinfo.build());
+                Msg.getTextChannel().sendMessage(userinfo.build()).queue();
 
             } catch (NullPointerException exc) {
 
-                ev.reply("Usuário inválido.");
+                Msg.getTextChannel().sendMessage("Usuário inválido.").queue();
 
             }
         }

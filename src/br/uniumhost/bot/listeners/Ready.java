@@ -17,16 +17,17 @@ public class Ready extends ListenerAdapter {
                 .setFooter(Config.footer);
 
         e.getJDA().getTextChannelById(Config.Logschannel).sendMessage(embed.build()).queue(msg -> {
-                try {
-                    Thread.sleep(10000);
-                    msg.delete().queue();
-                } catch (InterruptedException exc) {
+            try {
+                Thread.sleep(10000);
+                msg.delete().queue();
+            } catch (InterruptedException exc) {
 
-                    exc.printStackTrace();
+                exc.printStackTrace();
 
-                }
+            }
         });
-        return;
+         return;
     }
+
 
 }
