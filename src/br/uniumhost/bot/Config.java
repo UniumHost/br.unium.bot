@@ -3,7 +3,7 @@ package br.uniumhost.bot;
 public class Config {
 
     //Informações gerais do BOT
-    public static String Token = "NzM1NTE5NTUzOTk1NDA3Mzkx.Xxhb9g.aPuwBHkrBLt7JsNCdvWdUIoQ3-c";
+    public static String Token = "";
     public static String Preffix = "/";
     public static String Owner = "708568374250045481";
     public static String[] Owners = {"617916467588890625", "390511051239849997"};
